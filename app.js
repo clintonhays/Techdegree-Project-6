@@ -26,4 +26,22 @@ function getRandPhraseAsArray (arr) {
 	return chars;
 }
 
-getRandPhraseAsArray(phrases);
+const phraseArray = getRandPhraseAsArray(phrases);
+
+function addPhraseToDisplay (arr) {
+	for (let i = 0; i < arr.length; i++) {
+		let li = document.createElement('li');
+		li.textContent = arr[i];
+		phrase.append(li);
+		if (li.textContent !== ' ') {
+			li.className = 'letter';
+		}
+	}
+}
+
+addPhraseToDisplay(phraseArray);
+
+function checkLetter (button) {
+	chars = document.getElementsByClassName('letter');
+	match = null;
+}
