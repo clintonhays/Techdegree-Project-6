@@ -18,8 +18,12 @@ reset.addEventListener('click', (e) => {
 
 function getRandPhraseAsArray (arr) {
 	// Get random phrase and store it as an array
-	randIndex = Math.floor(Math.random() * arr.length);
-	return arr[randIndex];
+	randPhrase = Math.floor(Math.random() * arr.length);
+	chars = [];
+	for (let i = 0; i < arr[randPhrase].length; i++) {
+		chars.push(arr[randPhrase][i]);
+	}
+	return chars;
 }
 
 getRandPhraseAsArray(phrases);
