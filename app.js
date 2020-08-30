@@ -4,11 +4,12 @@ const reset = document.getElementsByClassName('btn__reset')[0];
 const missed = 0;
 
 const phrases = [
-	'shantay you stay',
-	'now sashay away',
-	'reading is fundamental',
-	'she done already done had herses',
-	'oh no she better dont'
+	'Shantay you stay',
+	'Now sashay away',
+	'Reading is fundamental',
+	'She done already done had herses',
+	'Can I get an amen'
+	// 'oh no she better dont'
 ];
 
 reset.addEventListener('click', (e) => {
@@ -36,12 +37,30 @@ function addPhraseToDisplay (arr) {
 		if (li.textContent !== ' ') {
 			li.className = 'letter';
 		}
+		else {
+			li.className = 'space';
+		}
 	}
 }
 
 addPhraseToDisplay(phraseArray);
 
-function checkLetter (button) {
-	chars = document.getElementsByClassName('letter');
-	match = null;
-}
+qwerty.addEventListener('click', (e) => {
+	const button = e.target;
+	function checkLetter (button) {
+		letters = document.getElementsByClassName('letter');
+		match = null;
+		for (let i = 0; i < letters.length; i++) {
+			if (button.textContent === letters[i].textContent) {
+				letters[i].className = 'show';
+				match += button.textContent;
+			}
+		}
+		return match;
+	}
+
+	if (button.tagName === 'BUTTON' && button.className !== 'chosen') {
+		button.className = 'chosen';
+		letterFound = checkLetter(button);
+	}
+});
