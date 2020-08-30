@@ -16,8 +16,10 @@ reset.addEventListener('click', (e) => {
 	overlay.style.display = 'none';
 });
 
-// reset.addEventListener('click', (e) => {
-// 	e = event.target;
-// 	overlay = document.getElementById('overlay');
-// 	overlay.style.display = 'none';
-// });
+function getRandPhraseAsArray (arr) {
+	// Get random phrase and store it as an array
+	randIndex = Math.floor(Math.random() * arr.length);
+	return arr[randIndex];
+}
+
+getRandPhraseAsArray(phrases);
