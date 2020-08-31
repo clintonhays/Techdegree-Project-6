@@ -1,7 +1,7 @@
 const guess = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const reset = document.getElementsByClassName('btn__reset')[0];
-const missed = 0;
+let missed = 0;
 
 const phrases = [
 	'Shantay you stay',
@@ -47,6 +47,8 @@ addPhraseToDisplay(phraseArray);
 
 qwerty.addEventListener('click', (e) => {
 	const button = e.target;
+	const hearts = document.getElementsByClassName('tries');
+	const heartTotal = document.getElementById('scoreboard').firstElementChild;
 
 	function checkLetter (button) {
 		letters = document.getElementsByClassName('letter');
@@ -63,5 +65,11 @@ qwerty.addEventListener('click', (e) => {
 	if (button.tagName === 'BUTTON' && button.className !== 'chosen') {
 		button.className = 'chosen';
 		letterFound = checkLetter(button);
+		if (letterFound === null) {
+			for (let i = 0; i < hearts.length; i++) {
+				heartTotal.removeChild(hearts[i]);
+				return (missed += 1);
+			}
+		}
 	}
 });
