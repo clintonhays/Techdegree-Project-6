@@ -1,3 +1,4 @@
+const overlay = document.getElementById('overlay');
 const guess = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const reset = document.getElementsByClassName('btn__reset')[0];
@@ -13,14 +14,13 @@ const phrases = [
 ];
 
 reset.addEventListener('click', (e) => {
-	overlay = document.getElementById('overlay');
 	overlay.style.display = 'none';
 });
 
 function getRandPhraseAsArray (arr) {
 	// Get random phrase and store it as an array
-	randPhrase = Math.floor(Math.random() * arr.length);
-	chars = [];
+	const randPhrase = Math.floor(Math.random() * arr.length);
+	let chars = [];
 	for (let i = 0; i < arr[randPhrase].length; i++) {
 		chars.push(arr[randPhrase][i]);
 	}
@@ -51,10 +51,10 @@ qwerty.addEventListener('click', (e) => {
 	const heartTotal = document.getElementById('scoreboard').firstElementChild;
 
 	function checkLetter (button) {
-		letters = document.getElementsByClassName('letter');
-		match = null;
+		const letters = document.getElementsByClassName('letter');
+		let match = null;
 		for (let i = 0; i < letters.length; i++) {
-			if (button.textContent.toLowerCase() == letters[i].textContent.toLowerCase()) {
+			if (button.textContent.toLowerCase() === letters[i].textContent.toLowerCase()) {
 				letters[i].className = 'show';
 				match += button.textContent;
 			}
@@ -71,5 +71,23 @@ qwerty.addEventListener('click', (e) => {
 				return (missed += 1);
 			}
 		}
+		console.log(missed);
 	}
+	checkWin();
 });
+
+const letters = document.getElementsByClassName('letter').length;
+const shown = document.getElementsByClassName('show');
+
+function checkWin () {
+	if (letters === shown.length) {
+		overlay.className = 'win';
+		overlay.firstElementChild.textContent = 'You Win!';
+		overlay.style.display = 'flex';
+	}
+	else if (missed >= 5) {
+		overlay.className = 'lose';
+		overlay.firstElementChild.textContent = 'You Lose!';
+		overlay.style.display = 'flex';
+	}
+}
