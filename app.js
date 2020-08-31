@@ -8,8 +8,8 @@ const phrases = [
 	'Now sashay away',
 	'Reading is fundamental',
 	'She done already done had herses',
-	'Can I get an amen'
-	// 'oh no she better dont'
+	'Can I get an amen',
+	'Oh no she better dont'
 ];
 
 reset.addEventListener('click', (e) => {
@@ -47,11 +47,12 @@ addPhraseToDisplay(phraseArray);
 
 qwerty.addEventListener('click', (e) => {
 	const button = e.target;
+
 	function checkLetter (button) {
 		letters = document.getElementsByClassName('letter');
 		match = null;
 		for (let i = 0; i < letters.length; i++) {
-			if (button.textContent === letters[i].textContent) {
+			if (button.textContent.toLowerCase() == letters[i].textContent.toLowerCase()) {
 				letters[i].className = 'show';
 				match += button.textContent;
 			}
