@@ -1,7 +1,13 @@
+//
+// - - - - - Global Variables - - - - -
+//
+
 const overlay = document.getElementById('overlay');
-const guess = document.getElementById('qwerty');
+const startGame = document.getElementsByClassName('btn__reset')[0];
+const keys = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
-const reset = document.getElementsByClassName('btn__reset')[0];
+const hearts = document.getElementsByClassName('tries');
+const heartTotal = document.getElementById('scoreboard').firstElementChild;
 let missed = 0;
 
 const phrases = [
@@ -13,21 +19,26 @@ const phrases = [
 	'Oh no she better dont'
 ];
 
-reset.addEventListener('click', (e) => {
-	overlay.style.display = 'none';
-});
+const phraseArray = getRandPhraseAsArray(phrases);
 
+//
+// - - - - - End Global Variables - - - - -
+//
+
+//
+// - - - - - Global Functions - - - - -
+//
+
+// get random phrase from [phrases] and return an
+// array of the characters from the phrase
 function getRandPhraseAsArray (arr) {
-	// Get random phrase and store it as an array
-	const randPhrase = Math.floor(Math.random() * arr.length);
+	const random = Math.floor(Math.random() * arr.length);
 	let chars = [];
-	for (let i = 0; i < arr[randPhrase].length; i++) {
-		chars.push(arr[randPhrase][i]);
+	for (let i = 0; i < arr[random].length; i++) {
+		chars.push(arr[random][i]);
 	}
 	return chars;
 }
-
-const phraseArray = getRandPhraseAsArray(phrases);
 
 function addPhraseToDisplay (arr) {
 	for (let i = 0; i < arr.length; i++) {
@@ -43,12 +54,48 @@ function addPhraseToDisplay (arr) {
 	}
 }
 
+// How to refactor this code?
+function checkWin () {
+	const letters = document.getElementsByClassName('letter').length;
+	const shown = document.getElementsByClassName('show');
+	const subtitle = document.getElementsByClassName('subtitle')[0];
+	if (letters === shown.length) {
+		setTimeout(() => {
+			overlay.className = 'win';
+			overlay.firstElementChild.textContent = 'Condragulations!';
+			overlay.style.display = 'flex';
+			startGame.textContent = 'One more time';
+			subtitle.textContent = " You're a winner, baby!";
+		}, 2000);
+	}
+	else if (missed >= 5) {
+		setTimeout(() => {
+			overlay.className = 'lose';
+			overlay.firstElementChild.textContent = 'Sashay away...';
+			overlay.style.display = 'flex';
+			startGame.textContent = 'One more time';
+			subtitle.textContent = `Answer: ${phraseArray.join('')}`;
+		}, 200);
+	}
+}
+
+//
+// - - - - - End Global Functions - - - - -
+//
+
+//
+// - - - - - Initialize Game - - - - -
+//
+
+// button click sets initial overlay display to none
+startGame.addEventListener('click', (e) => {
+	overlay.style.display = 'none';
+});
+
 addPhraseToDisplay(phraseArray);
 
 qwerty.addEventListener('click', (e) => {
 	const button = e.target;
-	const hearts = document.getElementsByClassName('tries');
-	const heartTotal = document.getElementById('scoreboard').firstElementChild;
 
 	function checkLetter (button) {
 		const letters = document.getElementsByClassName('letter');
@@ -70,7 +117,7 @@ qwerty.addEventListener('click', (e) => {
 		if (letterFound === null) {
 			button.style.backgroundColor = '#FF70A6';
 			for (let i = 0; i < hearts.length; i++) {
-				hearts[i].style.display = 'hidden';
+				heartTotal.removeChild(hearts[i]);
 				break;
 			}
 			missed++;
@@ -78,26 +125,3 @@ qwerty.addEventListener('click', (e) => {
 	}
 	checkWin();
 });
-
-function checkWin () {
-	const letters = document.getElementsByClassName('letter').length;
-	const shown = document.getElementsByClassName('show');
-	if (letters === shown.length) {
-		setTimeout(() => {
-			overlay.className = 'win';
-			overlay.firstElementChild.textContent = "Condragulations! You're a winner, baby!";
-			overlay.style.display = 'flex';
-			reset.textContent = 'One more time';
-			reset.setAttribute('href', 'index.html');
-		}, 2000);
-	}
-	else if (missed >= 5) {
-		setTimeout(() => {
-			overlay.className = 'lose';
-			overlay.firstElementChild.textContent = 'Sashay away...';
-			overlay.style.display = 'flex';
-			reset.textContent = 'Try again';
-			reset.setAttribute('href', 'index.html');
-		}, 200);
-	}
-}
