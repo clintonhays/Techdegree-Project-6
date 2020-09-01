@@ -5,13 +5,12 @@ const reset = document.getElementsByClassName('btn__reset')[0];
 let missed = 0;
 
 const phrases = [
-	'AAAAAAAAAAAAA'
-	// 'Shantay you stay',
-	// 'Now sashay away',
-	// 'Reading is fundamental',
-	// 'She done already done had herses',
-	// 'Can I get an amen',
-	// 'Oh no she better dont'
+	'Shantay you stay',
+	'Now sashay away',
+	'Reading is fundamental',
+	'She done already done had herses',
+	'Can I get an amen',
+	'Oh no she better dont'
 ];
 
 reset.addEventListener('click', (e) => {
@@ -72,25 +71,29 @@ qwerty.addEventListener('click', (e) => {
 			for (let i = 0; i < hearts.length; i++) {
 				button.style.backgroundColor = '#FF70A6';
 				heartTotal.removeChild(hearts[i]);
-				return missed++;
+				break;
 			}
+			missed++;
 		}
 	}
 	checkWin();
 });
 
-const letters = document.getElementsByClassName('letter').length;
-const shown = document.getElementsByClassName('show');
-
 function checkWin () {
+	const letters = document.getElementsByClassName('letter').length;
+	const shown = document.getElementsByClassName('show');
 	if (letters === shown.length) {
-		overlay.className = 'win';
-		overlay.firstElementChild.textContent = 'You Win!';
-		overlay.style.display = 'flex';
+		setTimeout(() => {
+			overlay.className = 'win';
+			overlay.firstElementChild.textContent = 'You Win!';
+			overlay.style.display = 'flex';
+		}, 2000);
 	}
-	if (missed >= 5) {
-		overlay.className = 'lose';
-		overlay.firstElementChild.textContent = 'You Lose!';
-		overlay.style.display = 'flex';
+	else if (missed >= 5) {
+		setTimeout(() => {
+			overlay.className = 'lose';
+			overlay.firstElementChild.textContent = 'You Lose!';
+			overlay.style.display = 'flex';
+		}, 200);
 	}
 }
