@@ -28,6 +28,7 @@ body {
 	display: flex;
 	height: 100vh;
 	background-color: #027d96;
+	overflow: hidden;
 }
 
 li,
@@ -208,6 +209,7 @@ button {
 
 .win a {
 	color: var(--color-win);
+	text-decoration: none;
 }
 
 .lose {
@@ -216,4 +218,5 @@ button {
 
 .lose a {
 	color: var(--color-lose);
+	text-decoration: none;
 }

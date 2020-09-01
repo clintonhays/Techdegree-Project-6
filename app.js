@@ -6,7 +6,7 @@ let missed = 0;
 
 const phrases = [
 	'Shantay you stay',
-	'Now sashay away',
+	'May the best lady win',
 	'Reading is fundamental',
 	'She done already done had herses',
 	'Can I get an amen',
@@ -68,9 +68,9 @@ qwerty.addEventListener('click', (e) => {
 		button.className = 'chosen';
 		const letterFound = checkLetter(button);
 		if (letterFound === null) {
+			button.style.backgroundColor = '#FF70A6';
 			for (let i = 0; i < hearts.length; i++) {
-				button.style.backgroundColor = '#FF70A6';
-				heartTotal.removeChild(hearts[i]);
+				hearts[i].style.display = 'hidden';
 				break;
 			}
 			missed++;
@@ -85,15 +85,19 @@ function checkWin () {
 	if (letters === shown.length) {
 		setTimeout(() => {
 			overlay.className = 'win';
-			overlay.firstElementChild.textContent = 'You Win!';
+			overlay.firstElementChild.textContent = "Condragulations! You're a winner, baby!";
 			overlay.style.display = 'flex';
+			reset.textContent = 'One more time';
+			reset.setAttribute('href', 'index.html');
 		}, 2000);
 	}
 	else if (missed >= 5) {
 		setTimeout(() => {
 			overlay.className = 'lose';
-			overlay.firstElementChild.textContent = 'You Lose!';
+			overlay.firstElementChild.textContent = 'Sashay away...';
 			overlay.style.display = 'flex';
+			reset.textContent = 'Try again';
+			reset.setAttribute('href', 'index.html');
 		}, 200);
 	}
 }
