@@ -5,12 +5,13 @@ const reset = document.getElementsByClassName('btn__reset')[0];
 let missed = 0;
 
 const phrases = [
-	'Shantay you stay',
-	'Now sashay away',
-	'Reading is fundamental',
-	'She done already done had herses',
-	'Can I get an amen',
-	'Oh no she better dont'
+	'AAAAAAAAAAAAA'
+	// 'Shantay you stay',
+	// 'Now sashay away',
+	// 'Reading is fundamental',
+	// 'She done already done had herses',
+	// 'Can I get an amen',
+	// 'Oh no she better dont'
 ];
 
 reset.addEventListener('click', (e) => {
@@ -55,7 +56,9 @@ qwerty.addEventListener('click', (e) => {
 		let match = null;
 		for (let i = 0; i < letters.length; i++) {
 			if (button.textContent.toLowerCase() === letters[i].textContent.toLowerCase()) {
-				letters[i].className = 'show';
+				// letters[i].className = 'show'; // This line does not add class name to consecutive repeated letters. Why?
+				letters[i].classList.add('show');
+				button.style.backgroundColor = '#6DB0C5';
 				match += button.textContent;
 			}
 		}
@@ -64,14 +67,14 @@ qwerty.addEventListener('click', (e) => {
 
 	if (button.tagName === 'BUTTON' && button.className !== 'chosen') {
 		button.className = 'chosen';
-		letterFound = checkLetter(button);
+		const letterFound = checkLetter(button);
 		if (letterFound === null) {
 			for (let i = 0; i < hearts.length; i++) {
+				button.style.backgroundColor = '#FF70A6';
 				heartTotal.removeChild(hearts[i]);
-				return (missed += 1);
+				return missed++;
 			}
 		}
-		console.log(missed);
 	}
 	checkWin();
 });
@@ -85,7 +88,7 @@ function checkWin () {
 		overlay.firstElementChild.textContent = 'You Win!';
 		overlay.style.display = 'flex';
 	}
-	else if (missed >= 5) {
+	if (missed >= 5) {
 		overlay.className = 'lose';
 		overlay.firstElementChild.textContent = 'You Lose!';
 		overlay.style.display = 'flex';
