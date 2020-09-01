@@ -182,6 +182,12 @@ button {
 	cursor: pointer;
 }
 
+/* Scoreboard */
+
+.hidden {
+	display: none;
+}
+
 /* Overlay */
 
 #overlay {
