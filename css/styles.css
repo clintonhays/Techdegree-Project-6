@@ -170,7 +170,8 @@ button {
 	color: #ffffff;
 }
 
-.btn__reset {
+.btn__reset,
+.btn__start {
 	padding: 8px;
 	margin: 50px auto;
 	background: #ffffff;
@@ -178,14 +179,13 @@ button {
 	font-size: var(--font-size-medium);
 }
 
-.btn__reset:hover {
-	cursor: pointer;
+.btn__reset {
+	display: none;
 }
 
-/* Scoreboard */
-
-.hidden {
-	display: none;
+.btn__reset:hover,
+.btn__start:hover {
+	cursor: pointer;
 }
 
 /* Overlay */

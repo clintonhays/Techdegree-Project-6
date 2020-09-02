@@ -3,6 +3,7 @@
 //
 
 const overlay = document.getElementById('overlay');
+const startGame = document.getElementsByClassName('btn__start')[0];
 const restartGame = document.getElementsByClassName('btn__reset')[0];
 const keyrows = document.getElementById('qwerty');
 const keys = document.getElementsByTagName('button');
@@ -10,18 +11,19 @@ const phrase = document.getElementById('phrase');
 const phraseUl = phrase.firstElementChild;
 const hearts = document.getElementsByClassName('tries');
 const heartTotal = document.getElementById('scoreboard').firstElementChild;
+const removedHearts = [];
 let missed = 0;
 
 const phrases = [
 	'Shantay you stay',
-	'May the best lady win',
+	'May the best woman win',
 	'Reading is fundamental',
 	'She done already done had herses',
 	'Can I get an amen',
 	'Oh no she better dont'
 ];
 
-const phraseArray = getRandPhraseAsArray(phrases);
+let phraseArray = getRandPhraseAsArray(phrases);
 
 //
 // - - - - - End Global Variables - - - - -
@@ -60,7 +62,7 @@ function addPhraseToDisplay (arr) {
 // How to refactor this code?
 // checks win condition by comparing shown letters
 // to the length of the phrase array
-// checks loss condition by comparin # of missed guesses
+// checks loss condition by comparing # of missed guesses
 // to maximum lives
 function checkWin () {
 	const letters = document.getElementsByClassName('letter').length;
@@ -71,26 +73,32 @@ function checkWin () {
 			overlay.className = 'win';
 			overlay.firstElementChild.textContent = 'Condragulations!';
 			overlay.style.display = 'flex';
+			restartGame.style.display = 'inline';
 			restartGame.textContent = 'One more time';
+			startGame.textContent = 'Quit';
+			startGame.setAttribute('href', 'index.html');
 			subtitle.textContent = "You're a winner, baby!";
-		}, 2000);
+		}, 1000);
 	}
 	else if (missed >= 5) {
 		setTimeout(() => {
 			overlay.className = 'lose';
 			overlay.firstElementChild.textContent = 'Sashay away...';
 			overlay.style.display = 'flex';
+			restartGame.style.display = 'inline';
 			restartGame.textContent = 'One more time';
+			startGame.textContent = 'Quit';
+			startGame.setAttribute('href', 'index.html');
 			subtitle.textContent = `Answer: ${phraseArray.join('')}`;
 		}, 200);
 	}
 }
 
-// resets hearts, currently not working
+// resets hearts
 function resetHearts () {
-	const hidden = document.querySelectorAll('.hidden');
-	for (let i = 0; i < hidden.length; i++) {
-		hidden[i].classList.remove('hidden');
+	missed = 0;
+	for (let i = 0; i < removedHearts.length; i++) {
+		heartTotal.appendChild(removedHearts[i]);
 	}
 }
 
@@ -99,13 +107,24 @@ function resetGuesses () {
 	const chosen = document.querySelectorAll('.chosen');
 	for (let i = 0; i < chosen.length; i++) {
 		chosen[i].style.backgroundColor = '';
-		chosen[i].classList.remove('chosen');
+		chosen[i].className = '';
 	}
 }
 
 // resets phrases, currently not working
+// the same phrase is returned when game is restarted
 function resetPhrase () {
 	phraseUl.innerHTML = '';
+	addPhraseToDisplay(getRandPhraseAsArray(phrases));
+}
+
+// resets game
+function resetGame () {
+	missed = 0;
+	resetPhrase();
+	resetGuesses();
+	resetHearts();
+	overlay.style.display = 'none';
 }
 
 //
@@ -117,21 +136,10 @@ function resetPhrase () {
 //
 
 // button click sets initial overlay display to none
-restartGame.addEventListener('click', (e) => {
-	resetGame();
-	// overlay.style.display = 'none';
-});
-
-// addPhraseToDisplay(phraseArray);
-
-function resetGame () {
-	missed = 0;
-	resetPhrase();
+startGame.addEventListener('click', (e) => {
 	addPhraseToDisplay(phraseArray);
-	resetGuesses();
-	resetHearts();
 	overlay.style.display = 'none';
-}
+});
 
 keyrows.addEventListener('click', (e) => {
 	const button = e.target;
@@ -155,11 +163,17 @@ keyrows.addEventListener('click', (e) => {
 		if (letterFound === null) {
 			button.style.backgroundColor = '#FF70A6';
 			for (let i = 0; i < hearts.length; i++) {
-				hearts[i].className = 'hidden';
+				removedHearts.push(heartTotal.removeChild(hearts[i]));
+				console.log(removedHearts);
 				break;
 			}
 			missed++;
 		}
 	}
 	checkWin();
+});
+
+// button click resets phrase, keys, and lives
+restartGame.addEventListener('click', (e) => {
+	resetGame();
 });
