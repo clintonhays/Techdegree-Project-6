@@ -71,6 +71,7 @@ function checkLetter (target) {
 	}
 	if (target.tagName === 'BUTTON' && target.className !== 'chosen') {
 		target.className = 'chosen';
+		target.disabled = 'true';
 		const letterFound = checkLetter(target);
 		if (letterFound === null) {
 			target.style.backgroundColor = '#FF70A6';
