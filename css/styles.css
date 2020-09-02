@@ -41,8 +41,8 @@ ul {
 
 h2 {
 	margin: 0;
-	text-transform: uppercase;
-	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 1px;
+	font-family: 'Pacifico', cursive;
 	font-size: var(--font-size-xlarge);
 	margin: 0;
 }
@@ -89,6 +89,8 @@ button {
 
 .letter {
 	font-size: 3em;
+	font-family: 'Crete Round', serif;
+	font-style: italic;
 	height: 65px;
 	width: 65px;
 	padding: 0px 1px 0 1px;
@@ -163,6 +165,10 @@ button {
 	justify-content: center;
 }
 
+.keyrow button {
+	font-family: 'Crete Round', serif;
+}
+
 .chosen {
 	background: var(--color-neutral);
 	border-radius: 5px;
@@ -205,6 +211,10 @@ button {
 
 .title {
 	color: #fff;
+}
+
+.subtitle {
+	font-family: 'Crete Round', serif;
 }
 
 .start {
